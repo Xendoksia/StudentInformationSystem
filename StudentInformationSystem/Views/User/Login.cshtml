@@ -1,0 +1,103 @@
+﻿@model StudentInformationSystem.Models.LoginViewModel
+
+@{
+    Layout = "_LoginLayout";
+}
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="utf-8">
+    <title>User Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #c7ebf0;
+            background-image: url('/images/duzce-9.jpeg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+
+        .login-container {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: rgba(228, 245, 247, 0.7);
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px 0px #000000;
+            margin-top: 100px;
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+            .login-header img {
+                width: 100px;
+            }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .btn-primary {
+            margin-top: 40px;
+            background-color: #007bff;
+            border-color: #007bff;
+            width: 90%;
+            border-radius: 30px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 12px;
+            font-size: 17px;
+        }
+
+        .alert-danger {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-header">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/D%C3%BCzce_University_logo.svg/800px-D%C3%BCzce_University_logo.svg.png" alt="Düzce Üniversitesi">
+            <h3>User Login</h3>
+        </div>
+
+        @using (Html.BeginForm("Login", "User", FormMethod.Post))
+        {
+            <div class="form-group">
+                @Html.LabelFor(model => model.Username)
+                @Html.TextBoxFor(model => model.Username, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.IdentityNumber)
+                @Html.TextBoxFor(model => model.IdentityNumber, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Password)
+                @Html.PasswordFor(model => model.Password, new { @class = "form-control" })
+            </div>
+            <button type="submit" class="btn btn-primary">Login</button>
+
+            <!-- Hatalı giriş mesajı -->
+            @if (!ViewData.ModelState.IsValid)
+            {
+                <div class="alert alert-danger">
+                    Username or password is incorrect. Please try again.
+                </div>
+            }
+        }
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,57 @@
+﻿@model StudentInformationSystem.Models.Announcement
+
+@{
+    ViewData["Title"] = "Announcement Details";
+}
+<style>
+ .back-button {
+        position: fixed;
+        top: 100px;
+        left: 100px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        font-size: 16px;
+        border-radius: 30px;
+        box-shadow: 0px 4px 10px rgba(0, 123, 255, 0.4);
+        transition: background-color 0.3s, transform 0.3s;
+        z-index: 9999;
+    }
+
+        .back-button:hover {
+            background-color: #0056b3;
+            transform: translateY(-2px);
+            text-decoration: none;
+        }
+</style>
+
+<!-- Geri Dön Butonu -->
+<button class="back-button" onclick="goBack()">← Back</button>
+
+
+<h1 class="text-center">Announcement Details</h1>
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h4 class="card-title">@Html.DisplayFor(model => model.Title)</h4>
+                    <p class="card-text">@Html.DisplayFor(model => model.Content)</p>
+                    <p class="card-text">Date: @Html.DisplayFor(model => model.Date)</p>
+                </div>
+                <div class="card-footer text-right">
+                    <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-primary">Edit</a>
+                    <a asp-action="Index" class="btn btn-secondary ml-2">Back to List</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+
+    function goBack() {
+        window.history.back();
+    }
+</script>

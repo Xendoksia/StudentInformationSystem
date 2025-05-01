@@ -1,0 +1,93 @@
+﻿@model List<StudentInformationSystem.Models.Student>
+
+@{
+    ViewBag.Title = "Student Information System";
+}
+
+<style>
+    .card {
+        border-radius: 15px;
+        border: 1px solid #ccc;
+        margin-bottom: 20px;
+    }
+
+    .card-body {
+        padding: 15px;
+    }
+
+    .btn-link {
+        color: inherit;
+        text-decoration: none;
+    }
+
+        .btn-link:hover {
+            color: inherit;
+            text-decoration: underline;
+        }
+</style>
+
+<h1 class="text-center">Student Informations</h1>
+
+<div class="container mt-4">
+    <div class="row justify-content-end mb-3">
+        <div class="col-md-4">
+            <form method="get" action="/Student/Index" class="input-group">
+                <input type="text" name="search" placeholder="Search by name or surname" class="form-control">
+                <button type="submit" class="btn btn-primary">Search</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="container mt-4">
+    <div class="row">
+        @foreach (var student in Model)
+        {
+            <div class="col-md-6 mb-4">
+                <div class="card" style="cursor: pointer;" onclick="toggleDetails('@student.Id')">
+                    <div class="card-body">
+                        <h5 class="card-title">@student.Name @student.Surname</h5>
+                        <p class="card-text">
+                            <strong>Student Number:</strong> @student.StudentNumber
+                        </p>
+                        <div id="details-@student.Id" style="display: none;">
+                            <p class="card-text">
+                                <strong>Identity Number:</strong> @student.IdentityNumber <br />
+                                <strong>Gender:</strong> @student.Gender <br />
+                                <strong>Birthdate:</strong> @student.BirthDate.ToShortDateString() <br />
+                                <strong>Phone Number:</strong> @student.PhoneNumber <br />
+                                <strong>Email:</strong> @student.Email <br />
+                                <strong>Address:</strong> @student.Address
+                            </p>
+                            <a href="/Student/Edit/@student.Id" class="btn btn-link">Edit</a>
+                            <a href="/Student/Delete/@student.Id" class="btn btn-link">Delete</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <a href="/Student/Create" class="btn btn-primary">Create New Student</a>
+        </div>
+    </div>
+</div>
+
+<footer class="text-center mt-4">
+    <p>© 2024 - StudentInformationSystem - Privacy</p>
+</footer>
+
+<script>
+    function toggleDetails(studentId) {
+        var detailsDiv = document.getElementById('details-' + studentId);
+        if (detailsDiv.style.display === 'none') {
+            detailsDiv.style.display = 'block';
+        } else {
+            detailsDiv.style.display = 'none';
+        }
+    }
+</script>

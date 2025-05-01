@@ -1,0 +1,155 @@
+﻿@model IEnumerable<StudentInformationSystem.Models.Announcement>
+
+@{
+    ViewBag.Title = "Announcement Information System";
+}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+
+<style>
+    body {
+        background-color: #f7f7f7;
+    }
+
+    .announcement-card {
+        width: 100%;
+        max-width: 900px;
+        min-height: 250px;
+        border-radius: 15px;
+        margin: 20px auto;
+        background-color: #ffffff;
+        box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s, box-shadow 0.3s;
+        cursor: pointer;
+        padding: 20px;
+    }
+
+        .announcement-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0px 12px 24px rgba(0, 123, 255, 0.3);
+        }
+
+    .card-title {
+        font-size: 1.8rem;
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+
+    .card-text {
+        font-size: 1.1rem;
+    }
+
+    .btn-link {
+        color: #007bff;
+        text-decoration: none;
+        font-weight: 600;
+        margin-right: 15px;
+    }
+
+        .btn-link:hover {
+            text-decoration: underline;
+        }
+
+    footer {
+        margin-top: 50px;
+    }
+
+    .create-btn {
+        margin-top: 40px;
+        border-radius: 30px;
+        padding: 10px 30px;
+    }
+
+    .back-button {
+        position: fixed;
+        top: 100px;
+        left: 100px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        font-size: 16px;
+        border-radius: 30px;
+        box-shadow: 0px 4px 10px rgba(0, 123, 255, 0.4);
+        transition: background-color 0.3s, transform 0.3s;
+        z-index: 9999;
+    }
+
+        .back-button:hover {
+            background-color: #0056b3;
+            transform: translateY(-2px);
+            text-decoration: none;
+        }
+</style>
+
+<!-- Geri Dön Butonu -->
+<button class="back-button" onclick="goBack()">← Back</button>
+
+<h1 class="text-center mt-4">Announcements</h1>
+
+<div class="container mt-4">
+    <div class="row justify-content-end mb-3">
+        <div class="col-md-4">
+            <form method="get" action="/Announcement/Index" class="input-group">
+                <input type="text" name="search" placeholder="Search by title" class="form-control">
+                <button type="submit" class="btn btn-primary">Search</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    @foreach (var announcement in Model)
+    {
+        <div class="announcement-card" onclick="toggleDetails('@announcement.Id')">
+            <div>
+                <h5 class="card-title"><i class="fas fa-bullhorn"></i> @announcement.Title</h5>
+                <p class="card-text">
+                    <strong>Date:</strong> @announcement.Date.ToShortDateString()
+                </p>
+            </div>
+            <div id="details-@announcement.Id" style="display: none; margin-top: 20px;">
+                <p class="card-text"><strong>Content:</strong> @announcement.Content</p>
+                <a href="/Announcement/Edit/@announcement.Id" class="btn btn-link">Edit</a>
+                <a href="/Announcement/Delete/@announcement.Id" class="btn btn-link">Delete</a>
+            </div>
+        </div>
+    }
+</div>
+
+<div class="container text-center">
+    <a href="/Announcement/Create" class="btn btn-primary create-btn">Create New Announcement</a>
+</div>
+
+<script>
+    function toggleDetails(id) {
+        // Önce diğer tüm detayları kapat
+        document.querySelectorAll("[id^='details-']").forEach(function (div) {
+            div.style.display = "none";
+        });
+
+        // Tıklananı aç/kapat
+        var clickedDiv = document.getElementById('details-' + id);
+        if (clickedDiv.style.display === "none") {
+            clickedDiv.style.display = "block";
+        } else {
+            clickedDiv.style.display = "none";
+        }
+    }
+
+
+    function goBack() {
+    @if (User.IsInRole("teacher"))
+    {
+        <text>window.location.href = '@Url.Action("Index", "TeacherMain")';</text>
+    }
+    else if (User.IsInRole("admin"))
+    {
+        <text>window.location.href = '@Url.Action("Index", "Admin")';</text>
+    }
+    else
+    {
+        <text>window.history.back();</text>
+    }
+    }
+</script>

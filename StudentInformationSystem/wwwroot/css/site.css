@@ -1,0 +1,18 @@
+body {
+    padding-top: 56px;
+}
+
+.navbar-brand {
+    font-weight: bold;
+}
+
+.container {
+    margin-top: 20px;
+}
+
+.btn-success {
+    background-color: #007bff;
+    border-color: #007bff;
+    bottom: 10px;
+    left: 6px;
+}

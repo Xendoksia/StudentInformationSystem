@@ -1,0 +1,119 @@
+﻿@{
+    ViewBag.Title = "Academic Calendar";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>@ViewBag.Title</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .semester {
+            margin-top: 20px;
+        }
+
+        .container {
+            padding-top: 20px;
+            padding-bottom: 20px;
+        }
+
+        .table {
+            margin-bottom: 20px;
+        }
+
+            .table thead th {
+                text-align: center;
+                vertical-align: middle;
+            }
+
+            .table tbody td {
+                text-align: center;
+                vertical-align: middle;
+            }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2 class="mt-4">Academic Calendar</h2>
+
+        <div class="form-group">
+            <label for="semesterDropdown">Semester:</label>
+            <select id="semesterDropdown" class="form-control">
+                <option value="Fall">2023 - 2024 Fall Semester</option>
+                <option selected value="Spring">2023 - 2024 Spring Semester</option>
+                <option value="Summer">2023 - 2024 Summer School</option>
+            </select>
+        </div>
+
+        <div id="Fall" class="semester" style="display: none;">
+            <h3 class="mt-4">2023 - 2024 Fall Semester</h3>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Start</th>
+                        <th>End</th>
+                        <th>Activity</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>25.09.2023</td><td>04.10.2023</td><td>Student Course Selection Procedures</td></tr>
+                    <tr><td>26.09.2023</td><td>07.10.2023</td><td>Advisor Course Approval Procedures</td></tr>
+                    <tr><td>02.10.2023</td><td>06.01.2024</td><td>2023-2024 Fall Semester Course Start - End</td></tr>
+                    <tr><td>01.11.2023</td><td>01.02.2024</td><td>Fall Semester Midterm Exam Grade Entry</td></tr>
+                    <tr><td>28.10.2023</td><td>29.10.2023</td><td>Republic Day</td></tr>
+                    <tr><td>24.12.2023</td><td>01.02.2024</td><td>Entry of End-of-Term Grades via Internet</td></tr>
+                    <tr><td>24.12.2023</td><td>30.03.2025</td><td>Fall Semester Incomplete Grade Entry</td></tr>
+                    <tr><td>01.01.2024</td><td>01.01.2024</td><td>New Year's Day</td></tr>
+                    <tr><td>26.02.2024</td><td>01.05.2024</td><td>Spring Semester Midterm Grade Entry</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div id="Spring" class="semester">
+            <h3 class="mt-4">2023 - 2024 Spring Semester</h3>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Start</th>
+                        <th>End</th>
+                        <th>Activity</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>06.02.2024</td><td>12.02.2024</td><td>Student Course Selection Procedures</td></tr>
+                    <tr><td>07.02.2024</td><td>18.02.2024</td><td>Advisor Course Approval Procedures</td></tr>
+                    <tr><td>12.02.2024</td><td>25.05.2024</td><td>2023-2024 Spring Semester Course Start - End</td></tr>
+                    <tr><td>01.03.2024</td><td>09.06.2024</td><td>Spring Semester Midterm Exam Grade Entry</td></tr>
+                    <tr><td>01.03.2024</td><td>09.06.2024</td><td>Entry of End-of-Term Grades via Internet</td></tr>
+                    <tr><td>01.03.2024</td><td>09.06.2024</td><td>Spring Semester Incomplete Grade Entry</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div id="Summer" class="semester" style="display: none;">
+            <h3 class="mt-4">2023 - 2024 Summer School</h3>
+            <p>No records found.</p>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var selectedSemester = document.getElementById("semesterDropdown").value;
+            document.getElementById(selectedSemester).style.display = "block";
+
+            document.getElementById("semesterDropdown").addEventListener("change", function () {
+                var selectedSemester = this.value;
+                var semesters = document.getElementsByClassName("semester");
+                for (var i = 0; i < semesters.length; i++) {
+                    semesters[i].style.display = "none";
+                }
+                document.getElementById(selectedSemester).style.display = "block";
+            });
+        });
+    </script>
+</body>
+</html>

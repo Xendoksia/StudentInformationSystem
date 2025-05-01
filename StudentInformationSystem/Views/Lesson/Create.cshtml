@@ -1,0 +1,121 @@
+﻿@model StudentInformationSystem.Models.Lesson
+
+@{
+    ViewData["Title"] = "Create Lesson";
+}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+
+<style>
+    body {
+        background-color: #f7f7f7;
+    }
+
+    .create-lesson-card {
+        max-width: 700px;
+        margin: 50px auto;
+        padding: 30px;
+        background: #fff;
+        border-radius: 15px;
+        box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.1);
+        transition: box-shadow 0.3s;
+    }
+
+        .create-lesson-card:hover {
+            box-shadow: 0px 12px 30px rgba(0, 123, 255, 0.3);
+        }
+
+        .create-lesson-card h1 {
+            font-weight: bold;
+            margin-bottom: 30px;
+        }
+
+    .form-group label {
+        font-weight: 600;
+    }
+
+    .btn-create {
+        background-color: #28a745;
+        border: none;
+        padding: 10px 30px;
+        border-radius: 30px;
+        font-size: 1.1rem;
+        transition: background-color 0.3s;
+        color: white;
+    }
+
+        .btn-create:hover {
+            background-color: #218838;
+        }
+
+    .btn-backlist {
+        background-color: #6c757d;
+        border: none;
+        padding: 10px 30px;
+        border-radius: 30px;
+        font-size: 1.1rem;
+        transition: background-color 0.3s;
+        color: white;
+    }
+
+        .btn-backlist:hover {
+            background-color: #5a6268;
+        }
+
+    .form-buttons {
+        margin-top: 30px;
+        text-align: center;
+    }
+
+   
+</style>
+
+
+<div class="create-lesson-card">
+    <h1 class="text-center"><i class="fas fa-plus-circle"></i> Create Lesson</h1>
+
+    <form asp-action="Create">
+        <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+
+        <div class="form-group">
+            <label asp-for="Code" class="control-label"></label>
+            <input asp-for="Code" class="form-control" placeholder="Enter Course Code..." />
+            <span asp-validation-for="Code" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Name" class="control-label"></label>
+            <input asp-for="Name" class="form-control" placeholder="Enter Course Name..." />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Semester" class="control-label"></label>
+            <input asp-for="Semester" class="form-control" placeholder="Enter Semester..." />
+            <span asp-validation-for="Semester" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Credit" class="control-label"></label>
+            <input asp-for="Credit" class="form-control" placeholder="Enter Credit..." />
+            <span asp-validation-for="Credit" class="text-danger"></span>
+        </div>
+
+        <div class="form-buttons">
+            <input type="submit" value="Create" class="btn btn-success btn-create" />
+            <a asp-action="Index" class="btn btn-secondary btn-backlist ml-3">Back to List</a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+
+<script>
+    function goBack() {
+        window.history.back();
+    }
+</script>

@@ -1,0 +1,109 @@
+﻿@model StudentInformationSystem.Models.Grade
+
+@{
+    ViewData["Title"] = "Edit Grade";
+}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+
+<style>
+    body {
+        background-color: #f7f7f7;
+    }
+
+    .edit-card {
+        max-width: 700px;
+        margin: 50px auto;
+        padding: 30px;
+        background: #fff;
+        border-radius: 15px;
+        box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.1);
+        transition: box-shadow 0.3s;
+    }
+
+        .edit-card:hover {
+            box-shadow: 0px 12px 30px rgba(0, 123, 255, 0.3);
+        }
+
+        .edit-card h1 {
+            font-weight: bold;
+            margin-bottom: 30px;
+        }
+
+    .form-group label {
+        font-weight: 600;
+    }
+
+    .btn-save {
+        background-color: #007bff;
+        border: none;
+        padding: 10px 30px;
+        border-radius: 30px;
+        font-size: 1.1rem;
+        transition: background-color 0.3s;
+    }
+
+        .btn-save:hover {
+            background-color: #0056b3;
+        }
+
+    .btn-back {
+        background-color: #6c757d;
+        border: none;
+        padding: 10px 30px;
+        border-radius: 30px;
+        font-size: 1.1rem;
+        transition: background-color 0.3s;
+    }
+
+        .btn-back:hover {
+            background-color: #5a6268;
+        }
+
+    .form-buttons {
+        margin-top: 30px;
+        text-align: center;
+    }
+
+    .validation-summary-errors {
+        margin-bottom: 20px;
+    }
+</style>
+
+<div class="edit-card">
+    <h1 class="text-center"><i class="fas fa-edit"></i> Edit Grade</h1>
+
+    <form asp-action="Edit">
+        <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+        <input type="hidden" asp-for="Id" />
+
+        <div class="form-group">
+            <label asp-for="StudentNumber" class="control-label"></label>
+            <input asp-for="StudentNumber" class="form-control" placeholder="Enter Student Number..." />
+            <span asp-validation-for="StudentNumber" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Code" class="control-label"></label>
+            <input asp-for="Code" class="form-control" placeholder="Enter Lesson Code..." />
+            <span asp-validation-for="Code" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="GradeValue" class="control-label"></label>
+            <input asp-for="GradeValue" class="form-control" placeholder="Enter Grade Value..." />
+            <span asp-validation-for="GradeValue" class="text-danger"></span>
+        </div>
+
+        <div class="form-buttons">
+            <input type="submit" value="Save" class="btn btn-primary btn-save" />
+            <a asp-action="Index" class="btn btn-secondary btn-back ml-2">Back to List</a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

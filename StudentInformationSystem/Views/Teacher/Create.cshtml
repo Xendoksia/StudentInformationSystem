@@ -1,0 +1,115 @@
+﻿@model StudentInformationSystem.Models.Teacher
+
+@{
+    ViewData["Title"] = "Create Teacher";
+}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+
+<style>
+    body {
+        background-color: #f8f9fa;
+    }
+
+    .create-card {
+        margin-top: 50px;
+        padding: 30px;
+        border-radius: 15px;
+        background-color: white;
+        box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+    }
+
+        .create-card h4 {
+            font-weight: bold;
+            margin-bottom: 25px;
+        }
+
+    .form-group label {
+        font-weight: 500;
+    }
+
+    .btn-success {
+        border-radius: 25px;
+        padding: 10px 30px;
+        font-size: 1rem;
+        background-color: #28a745;
+        border: none;
+    }
+
+        .btn-success:hover {
+            background-color: #218838;
+        }
+
+    .btn-secondary-custom {
+        background-color: #6c757d;
+        color: white;
+        border: none;
+        padding: 10px 30px;
+        border-radius: 25px;
+        font-size: 1rem;
+        transition: background-color 0.3s ease;
+    }
+
+        .btn-secondary-custom:hover {
+            background-color: #5a6268;
+            color: white;
+            text-decoration: none;
+        }
+</style>
+
+
+<h1 class="text-center"><i class="fas fa-chalkboard-teacher"></i> Create Teacher</h1>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-7">
+            <div class="create-card">
+                <h4 class="text-center">Teacher Information</h4>
+
+                <form asp-action="Create">
+                    <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+
+                    <div class="form-group">
+                        <label asp-for="IdentityNumber"></label>
+                        <input asp-for="IdentityNumber" class="form-control" />
+                        <span asp-validation-for="IdentityNumber" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Name"></label>
+                        <input asp-for="Name" class="form-control" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Surname"></label>
+                        <input asp-for="Surname" class="form-control" />
+                        <span asp-validation-for="Surname" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Email"></label>
+                        <input asp-for="Email" class="form-control" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Office"></label>
+                        <input asp-for="Office" class="form-control" />
+                        <span asp-validation-for="Office" class="text-danger"></span>
+                    </div>
+                    <div class="form-group text-center mt-4">
+                        <input type="submit" value="Create" class="btn btn-success" />
+                        <a asp-action="Index" class="btn btn-secondary-custom ml-2">Back to List</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

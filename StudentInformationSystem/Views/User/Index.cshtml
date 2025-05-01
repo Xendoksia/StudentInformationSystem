@@ -1,0 +1,214 @@
+﻿@model IEnumerable<StudentInformationSystem.Models.User>
+
+@{
+    ViewBag.Title = "User Management";
+}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+
+<style>
+    body {
+        background-color: #f7f7f7;
+    }
+
+    .user-table-container {
+        background-color: #ffffff;
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        margin-top: 30px;
+    }
+
+    .user-header {
+        font-size: 30px;
+        font-weight: bold;
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    .action-buttons a {
+        margin-right: 10px;
+    }
+
+    .search-form {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .search-box {
+        display: flex;
+        flex: 1;
+        margin-right: 15px;
+        min-width: 250px;
+    }
+
+        .search-box input {
+            flex: 1;
+            margin-right: 10px;
+        }
+
+    .create-button {
+        font-size: 0.9rem;
+        padding: 8px 20px;
+        background-color: #28a745;
+        border: none;
+        border-radius: 25px;
+        color: white;
+        transition: background-color 0.3s ease;
+    }
+
+        .create-button:hover {
+            background-color: #218838;
+            color: white;
+            text-decoration: none;
+        }
+
+    .filter-select {
+        margin-top: 10px;
+        margin-bottom: 20px;
+        max-width: 200px;
+    }
+
+    .back-button {
+        margin-bottom: 20px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        padding: 8px 20px;
+        border-radius: 25px;
+        transition: background-color 0.3s ease;
+    }
+
+        .back-button:hover {
+            background-color: #0056b3;
+            text-decoration: none;
+            color: white;
+        }
+
+    .table th,
+    .table td {
+        vertical-align: middle;
+        text-align: center;
+    }
+
+    .table th {
+        background-color: #007bff;
+        color: white;
+    }
+
+    .table tbody tr:hover {
+        background-color: #f1f9ff;
+    }
+
+    .password-mask {
+        display: inline-block;
+        width: 100px;
+        text-align: center;
+    }
+
+    .password-toggle {
+        cursor: pointer;
+        color: #007bff;
+        margin-left: 8px;
+    }
+
+    footer {
+        margin-top: 60px;
+        font-size: 0.9rem;
+        color: #888;
+    }
+</style>
+
+<div class="container">
+
+    <!-- Back Button -->
+    <a href="@Url.Action("Index", "Admin")" class="btn back-button mb-3">
+        <i class="fas fa-arrow-left"></i> Back to Admin Dashboard
+    </a>
+
+    <div class="user-table-container">
+        <div class="user-header">User List</div>
+
+        <div class="search-form">
+            <form method="get" action="@Url.Action("Index", "User")" class="search-box">
+                <input type="text" name="search" class="form-control" placeholder="Search by username" />
+                <button type="submit" class="btn btn-primary">Search</button>
+            </form>
+            <a href="/User/Create" class="create-button">+ Create User</a>
+        </div>
+
+        <select id="roleFilter" class="form-control filter-select">
+            <option value="all">All Roles</option>
+            <option value="admin">Admin</option>
+            <option value="teacher">Teacher</option>
+            <option value="student">Student</option>
+        </select>
+
+        <div class="table-responsive">
+            <table class="table table-hover table-bordered" id="userTable">
+                <thead>
+                    <tr>
+                        <th><i class="fas fa-user"></i> Username</th>
+                        <th><i class="fas fa-address-card"></i> Identity Number</th>
+                        <th><i class="fas fa-user-tag"></i> Role</th>
+                        <th><i class="fas fa-lock"></i> Password</th>
+                        <th><i class="fas fa-cogs"></i> Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var user in Model)
+                    {
+                        <tr data-role="@user.Role.ToLower()">
+                            <td>@user.Username</td>
+                            <td>@user.IdentityNumber</td>
+                            <td>@user.Role</td>
+                            <td>
+                                <span class="password-mask" data-password="@user.Password">•••••••</span>
+                                <i class="fas fa-eye password-toggle" onclick="togglePassword(this)"></i>
+                            </td>
+                            <td class="action-buttons">
+                                <a href="/User/Delete/@user.Id" class="btn btn-sm btn-outline-danger">
+                                    <i class="fas fa-trash"></i> Delete
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<footer class="text-center mt-4">
+    <p>© @DateTime.Now.Year - UserInformationSystem</p>
+</footer>
+
+@section Scripts {
+    <script>
+        function togglePassword(icon) {
+            const span = icon.previousElementSibling;
+            if (icon.classList.contains("fa-eye")) {
+                span.textContent = span.getAttribute("data-password");
+                icon.classList.remove("fa-eye");
+                icon.classList.add("fa-eye-slash");
+            } else {
+                span.textContent = "•••••••";
+                icon.classList.remove("fa-eye-slash");
+                icon.classList.add("fa-eye");
+            }
+        }
+
+        document.getElementById("roleFilter").addEventListener("change", function () {
+            const selectedRole = this.value;
+            const rows = document.querySelectorAll("#userTable tbody tr");
+
+            rows.forEach(row => {
+                const role = row.getAttribute("data-role");
+                row.style.display = (selectedRole === "all" || role === selectedRole) ? "" : "none";
+            });
+        });
+    </script>
+}

@@ -1,0 +1,130 @@
+﻿@model StudentInformationSystem.Models.Student
+
+@{
+    ViewData["Title"] = "My Details";
+    var grades = ViewBag.Grades as List<StudentInformationSystem.Models.Grade>;
+    var announcements = ViewBag.Announcements as List<StudentInformationSystem.Models.Announcement>;
+    var lessonNames = ViewBag.LessonNames as Dictionary<int, string>;
+}
+
+<style>
+    body {
+    }
+    
+    .sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        width: 220px;
+        background-color: #f8f9fa;
+        box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+        padding-top: 60px;
+    }
+
+   
+    .sidebar-content {
+        text-align: center;
+        padding: 0 15px;
+    }
+
+  
+    .sidebar-logo {
+        max-height: 100px;
+        margin-bottom: 20px; 
+        margin-top:20%;
+    }
+
+ 
+    .main-content {
+        margin-left: 80px; /* sidebar genişliği kadar */
+    }
+    }
+
+    }</style>
+
+<div class="container-fluid">
+    <div class="row">
+
+        <!-- Sidebar -->
+        <nav class="sidebar">
+            <div class="sidebar-content">
+                <img src="~/images/Düzce_University_logo.svg.png" alt="Logo" class="img-fluid sidebar-logo">
+                <h5 class="mb-4">Menu</h5>
+
+                <ul class="nav flex-column">
+                    <li class="nav-item mb-2">
+                        <a class="btn btn-primary w-100" asp-controller="StudentMain" asp-action="LessonPlan">Lesson Plan</a>
+                    </li>
+                    <li class="nav-item mb-2">
+                        <a class="btn btn-primary w-100" asp-controller="StudentMain" asp-action="AcademicCalendar">Academic Calendar</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-primary w-100" asp-controller="StudentMain" asp-action="MyGrades" asp-route-identityNumber="@Model.IdentityNumber">My Grades</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <h1 class="text-center" style="font-size:40px">My Details</h1>
+
+            <div class="card shadow-sm mt-4">
+                <div class="card-body">
+                    <h4 class="card-title" style="font-size:30px;margin-bottom:20px">Student Information</h4>
+                    <dl class="row">
+                        <dt class="col-sm-3">Identity Number:</dt>
+                        <dd class="col-sm-9">@Html.DisplayFor(model => model.IdentityNumber)</dd>
+                        <dt class="col-sm-3">Student Number:</dt>
+                        <dd class="col-sm-9">@Html.DisplayFor(model => model.StudentNumber)</dd>
+                        <dt class="col-sm-3">Name:</dt>
+                        <dd class="col-sm-9">@Html.DisplayFor(model => model.Name)</dd>
+                        <dt class="col-sm-3">Surname:</dt>
+                        <dd class="col-sm-9">@Html.DisplayFor(model => model.Surname)</dd>
+                        <dt class="col-sm-3">Gender:</dt>
+                        <dd class="col-sm-9">@Html.DisplayFor(model => model.Gender)</dd>
+                        <dt class="col-sm-3">Birth Date:</dt>
+                        <dd class="col-sm-9">@Html.DisplayFor(model => model.BirthDate)</dd>
+                        <dt class="col-sm-3">Phone Number:</dt>
+                        <dd class="col-sm-9">@Html.DisplayFor(model => model.PhoneNumber)</dd>
+                        <dt class="col-sm-3">Email:</dt>
+                        <dd class="col-sm-9">@Html.DisplayFor(model => model.Email)</dd>
+                    </dl>
+                </div>
+            </div>
+
+            <div class="card shadow-sm mt-4">
+                <div class="card-body">
+                    <h4 class="card-title">Announcements</h4>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Content</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var announcement in announcements)
+                            {
+                                <tr>
+                                    <td>@announcement.Title</td>
+                                    <td>@announcement.Content</td>
+                                    <td>@announcement.Date</td>
+                                </tr>
+                            }
+                            @if (!announcements.Any())
+                            {
+                                <tr>
+                                    <td colspan="3">No announcements available</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+
+    </div>
+</div>

@@ -1,0 +1,187 @@
+﻿@model IEnumerable<StudentInformationSystem.Models.Teacher>
+
+@{
+    ViewData["Title"] = "Teacher Management";
+}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+
+<style>
+    body {
+        background-color: #f7f7f7;
+    }
+
+    .teacher-table-container {
+        background-color: #ffffff;
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        margin-top: 30px;
+    }
+
+    .teacher-header {
+        font-size: 28px;
+        font-weight: bold;
+        text-align: center;
+        margin-bottom: 25px;
+    }
+
+    .search-create-row {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .search-box {
+        flex: 1;
+        display: flex;
+        margin-right: 10px;
+        min-width: 250px;
+    }
+
+        .search-box input {
+            flex: 1;
+            margin-right: 10px;
+        }
+
+    .create-button {
+        font-size: 0.9rem;
+        padding: 8px 20px;
+        background-color: #28a745;
+        border: none;
+        border-radius: 25px;
+        color: white;
+        transition: background-color 0.3s ease;
+    }
+
+        .create-button:hover {
+            background-color: #218838;
+            color: white;
+            text-decoration: none;
+        }
+
+    .back-button {
+        margin-bottom: 20px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        padding: 8px 20px;
+        border-radius: 25px;
+        transition: background-color 0.3s ease;
+    }
+
+        .back-button:hover {
+            background-color: #0056b3;
+            text-decoration: none;
+            color: white;
+        }
+
+    .table th,
+    .table td {
+        vertical-align: middle;
+        text-align: center;
+    }
+
+    .table th {
+        background-color: #007bff;
+        color: white;
+    }
+
+    .details-row {
+        display: none;
+        background-color: #f8f9fc;
+    }
+
+    .details-content {
+        padding: 15px 20px;
+        text-align: left;
+    }
+
+    .action-buttons a {
+        margin-right: 10px;
+    }
+
+    .pointer {
+        cursor: pointer;
+    }
+
+    footer {
+        margin-top: 50px;
+        text-align: center;
+        font-size: 0.9rem;
+        color: #999;
+    }
+</style>
+
+<div class="container">
+
+    <!-- Back Button -->
+    <a href="@Url.Action("Index", "Admin")" class="btn back-button">
+        <i class="fas fa-arrow-left"></i> Back to Admin Dashboard
+    </a>
+
+    <div class="teacher-table-container">
+        <div class="teacher-header">Teacher List</div>
+
+        <div class="search-create-row">
+            <form method="get" action="/Teacher/Index" class="search-box">
+                <input type="text" name="search" class="form-control" placeholder="Search by name or surname" />
+                <button type="submit" class="btn btn-primary">Search</button>
+            </form>
+            <a href="/Teacher/Create" class="create-button">+ Create Teacher</a>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-hover table-bordered">
+                <thead>
+                    <tr>
+                        <th><i class="fas fa-user"></i> Full Name</th>
+                        <th><i class="fas fa-id-card"></i> Identity Number</th>
+                        <th><i class="fas fa-envelope"></i> Email</th>
+                        <th><i class="fas fa-door-open"></i> Office</th>
+                        <th><i class="fas fa-cogs"></i> Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var teacher in Model)
+                    {
+                        <tr class="pointer" onclick="toggleDetails(@teacher.Id)">
+                            <td>@teacher.Name @teacher.Surname</td>
+                            <td>@teacher.IdentityNumber</td>
+                            <td>@teacher.Email</td>
+                            <td>@teacher.Office</td>
+                            <td class="action-buttons">
+                                <a href="/Teacher/Edit/@teacher.Id" class="btn btn-sm btn-outline-primary">
+                                    <i class="fas fa-edit"></i> Edit
+                                </a>
+                                <a href="/Teacher/Delete/@teacher.Id" class="btn btn-sm btn-outline-danger">
+                                    <i class="fas fa-trash"></i> Delete
+                                </a>
+                            </td>
+                        </tr>
+                        <tr class="details-row" id="details-@teacher.Id">
+                            <td colspan="5" class="details-content">
+                                <strong>More Info:</strong> Will be added later hope so.
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <p>© @DateTime.Now.Year - StudentInformationSystem</p>
+</footer>
+
+@section Scripts {
+    <script>
+        function toggleDetails(id) {
+            const row = document.getElementById("details-" + id);
+            row.style.display = (row.style.display === "table-row") ? "none" : "table-row";
+        }
+    </script>
+}

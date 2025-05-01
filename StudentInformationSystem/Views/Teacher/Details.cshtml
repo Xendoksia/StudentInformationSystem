@@ -1,0 +1,31 @@
+﻿@model StudentInformationSystem.Models.Teacher
+
+@{
+    ViewData["Title"] = "Teacher Details";
+}
+
+<h1 class="text-center">Teacher Details</h1>
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h4 class="card-title">@Html.DisplayFor(model => model.Name) @Html.DisplayFor(model => model.Surname)</h4>
+                    <dl class="row">
+                        <dt class="col-sm-3">Identity Number:</dt>
+                        <dd class="col-sm-9">@Html.DisplayFor(model => model.IdentityNumber)</dd>
+                        <dt class="col-sm-3">Email:</dt>
+                        <dd class="col-sm-9">@Html.DisplayFor(model => model.Email)</dd>
+                        <dt class="col-sm-3">Office:</dt>
+                        <dd class="col-sm-9">@Html.DisplayFor(model => model.Office)</dd>
+                    </dl>
+                </div>
+                <div class="card-footer text-right">
+                    <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-primary">Edit</a>
+                    <a asp-action="Index" class="btn btn-secondary ml-2">Back to List</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

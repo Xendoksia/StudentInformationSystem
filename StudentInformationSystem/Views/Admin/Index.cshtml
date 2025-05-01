@@ -1,0 +1,88 @@
+﻿@{
+    ViewBag.Title = "Admin Dashboard";
+}
+
+<style>
+    .dashboard-title {
+        font-size: 2.8rem;
+        font-weight: bold;
+        text-align: center;
+        margin-top: 50px;
+        margin-bottom: 50px;
+    }
+
+    .dashboard-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 40px;
+        max-width: 1100px;
+        margin: 0 auto 60px auto;
+        padding: 0 20px;
+    }
+
+    .dashboard-card {
+        background-color: #fff;
+        border-radius: 18px;
+        box-shadow: 0 6px 25px rgba(0, 0, 0, 0.08);
+        padding: 40px 30px;
+        text-align: center;
+        text-decoration: none;
+        transition: all 0.3s ease-in-out;
+        height: 220px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+        .dashboard-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
+            text-decoration: none;
+        }
+
+        .dashboard-card i {
+            font-size: 60px;
+            color: #0d6efd;
+            margin-bottom: 20px;
+        }
+
+        .dashboard-card span {
+            display: block;
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #212529;
+        }
+
+  
+  
+
+    }</style>
+
+<h1 class="dashboard-title">Admin Dashboard</h1>
+
+<div class="dashboard-grid">
+    <a href="/Lesson/Index" class="dashboard-card">
+        <i class="fas fa-book"></i>
+        <span>Manage Lessons</span>
+    </a>
+
+    <a href="/User/Index" class="dashboard-card">
+        <i class="fas fa-users-cog"></i>
+        <span>Manage Users</span>
+    </a>
+
+    <a href="/Teacher/Index" class="dashboard-card">
+        <i class="fas fa-chalkboard-teacher"></i>
+        <span>Manage Teachers</span>
+    </a>
+
+    <a href="/Student/Index" class="dashboard-card">
+        <i class="fas fa-user-graduate"></i>
+        <span>Manage Students</span>
+    </a>
+
+    <a href="/Announcement/Index" class="dashboard-card">
+        <i class="fas fa-bullhorn"></i>
+        <span>Manage Announcements</span>
+    </a>
+</div>

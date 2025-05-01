@@ -1,0 +1,43 @@
+﻿@model StudentInformationSystem.Models.Student
+
+@{
+    ViewData["Title"] = "Student Details";
+}
+
+<h1 class="text-center">Student Details</h1>
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h4 class="card-title">Student Information</h4>
+                    <dl class="row">
+                        <dt class="col-sm-3">Identity Number:</dt>
+                        <dd class="col-sm-9">@Html.DisplayFor(model => model.IdentityNumber)</dd>
+                        <dt class="col-sm-3">Student Number:</dt>
+                        <dd class="col-sm-9">@Html.DisplayFor(model => model.StudentNumber)</dd>
+                        <dt class="col-sm-3">Name:</dt>
+                        <dd class="col-sm-9">@Html.DisplayFor(model => model.Name)</dd>
+                        <dt class="col-sm-3">Surname:</dt>
+                        <dd class="col-sm-9">@Html.DisplayFor(model => model.Surname)</dd>
+                        <dt class="col-sm-3">Gender:</dt>
+                        <dd class="col-sm-9">@Html.DisplayFor(model => model.Gender)</dd>
+                        <dt class="col-sm-3">Birth Date:</dt>
+                        <dd class="col-sm-9">@Html.DisplayFor(model => model.BirthDate)</dd>
+                        <dt class="col-sm-3">Phone Number:</dt>
+                        <dd class="col-sm-9">@Html.DisplayFor(model => model.PhoneNumber)</dd>
+                        <dt class="col-sm-3">Email:</dt>
+                        <dd class="col-sm-9">@Html.DisplayFor(model => model.Email)</dd>
+                        <dt class="col-sm-3">Address:</dt>
+                        <dd class="col-sm-9">@Html.DisplayFor(model => model.Address)</dd>
+                    </dl>
+                </div>
+                <div class="card-footer text-right">
+                    <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-primary">Edit</a>
+                    <a asp-action="Index" class="btn btn-secondary ml-2">Back to List</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

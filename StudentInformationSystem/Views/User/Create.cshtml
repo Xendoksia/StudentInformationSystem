@@ -1,0 +1,132 @@
+﻿@model StudentInformationSystem.Models.User
+
+@{
+    ViewData["Title"] = "Create User";
+}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+
+<style>
+    body {
+        background-color: #f8f9fa;
+    }
+
+    .create-card {
+        margin-top: 50px;
+        padding: 30px;
+        border-radius: 15px;
+        background-color: white;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    }
+
+        .create-card h4 {
+            font-weight: bold;
+            margin-bottom: 25px;
+        }
+
+    .form-group label {
+        font-weight: 500;
+    }
+
+    .btn-success {
+        border-radius: 25px;
+        padding: 10px 30px;
+        font-size: 1rem;
+        background-color: #28a745;
+        border: none;
+    }
+
+        .btn-success:hover {
+            background-color: #218838;
+        }
+
+    .btn-outline-success {
+        border-radius: 25px;
+        padding: 10px 30px;
+        font-size: 1rem;
+    }
+</style>
+
+<h1 class="text-center"><i class="fas fa-user-plus"></i> Create User</h1>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="create-card">
+                <h4 class="text-center">User Information</h4>
+
+                <form asp-action="Create" method="post">
+                    <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+
+                    <div class="form-group">
+                        <label asp-for="IdentityNumber">Identity Number</label>
+                        <input asp-for="IdentityNumber" class="form-control" id="IdentityNumber" />
+                        <span asp-validation-for="IdentityNumber" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Username">Username</label>
+                        <input asp-for="Username" class="form-control" id="Username" readonly />
+                        <span asp-validation-for="Username" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Password">Password</label>
+                        <input asp-for="Password" class="form-control" id="Password" readonly />
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Role">Role</label>
+                        <select asp-for="Role" class="form-control">
+                            <option value="">-- Select Role --</option>
+                            <option value="admin">Admin</option>
+                            <option value="teacher">Teacher</option>
+                            <option value="student">Student</option>
+                        </select>
+                        <span asp-validation-for="Role" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group text-center mt-4">
+                        <input type="submit" value="Create" class="btn btn-success" />
+                        <a asp-action="Index" class="btn btn-outline-success ml-2">Back to List</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+
+    <script>
+        function generateRandomPassword(length) {
+            const chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            let password = "";
+            for (let i = 0; i < length; i++) {
+                password += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            return password;
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const identityInput = document.getElementById("IdentityNumber");
+            const usernameInput = document.getElementById("Username");
+            const passwordInput = document.getElementById("Password");
+
+            identityInput.addEventListener("input", function () {
+                const idVal = identityInput.value.trim();
+
+                if (idVal.length >= 4) {
+                    const last4 = idVal.slice(-4);
+                    usernameInput.value = "user" + last4;
+                    passwordInput.value = generateRandomPassword(8);
+                } else {
+                    usernameInput.value = "";
+                    passwordInput.value = "";
+                }
+            });
+        });
+    </script>
+}

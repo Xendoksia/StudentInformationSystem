@@ -1,0 +1,189 @@
+﻿@model IEnumerable<StudentInformationSystem.Models.Grade>
+
+@{
+    ViewData["Title"] = "Grades Information";
+    var studentNumbers = Model.Select(g => g.StudentNumber).Distinct().ToList();
+}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+
+<style>
+    body {
+        background-color: #f7f7f7;
+    }
+
+    .back-button {
+        position: fixed;
+        top: 100px;
+        left: 100px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        font-size: 16px;
+        border-radius: 30px;
+        box-shadow: 0px 4px 10px rgba(0, 123, 255, 0.4);
+        text-decoration: none;
+        transition: background-color 0.3s, transform 0.3s;
+        z-index: 1000;
+    }
+
+        .back-button:hover {
+            background-color: #0056b3;
+         
+            color: white;
+            text-decoration: none;
+        }
+
+    .student-panel {
+        max-width: 250px;
+        border-right: 1px solid #ddd;
+        height: 80vh;
+        overflow-y: auto;
+        padding: 15px;
+        background-color: #ffffff;
+        box-shadow: 2px 0 8px rgba(0, 0, 0, 0.05);
+    }
+
+    .student-item {
+        cursor: pointer;
+        padding: 12px;
+        border-radius: 8px;
+        margin-bottom: 8px;
+        transition: background-color 0.2s;
+        font-weight: 500;
+    }
+
+        .student-item:hover {
+            background-color: #e9f5ff;
+        }
+
+    .grade-table-container {
+        background-color: #ffffff;
+        padding: 25px;
+        border-radius: 10px;
+        box-shadow: 0px 4px 15px rgba(0, 123, 255, 0.1);
+    }
+
+    .grade-header {
+        font-size: 22px;
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+
+    .grade-table th,
+    .grade-table td {
+        vertical-align: middle;
+    }
+
+    .action-links a {
+        margin-right: 10px;
+        font-weight: 500;
+    }
+
+        .action-links a:hover {
+            text-decoration: underline;
+        }
+
+    .top-controls {
+        margin-bottom: 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+
+        .top-controls .search-form {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+            .top-controls .search-form input[type="text"] {
+                width: 300px;
+                margin-right: 10px;
+            }
+
+        .top-controls .btn-success {
+            margin-bottom: 10px;
+        }
+</style>
+
+<a href="https://localhost:7274/TeacherMain/Index" class="back-button">
+    ← Back 
+</a>
+
+<div class="container-fluid mt-0">
+    <div class="top-controls">
+        <form asp-action="Index" method="get" class="search-form">
+            <input type="text" name="search" class="form-control" placeholder="Search by student number" />
+            <button type="submit" class="btn btn-primary">Search</button>
+        </form>
+        <a asp-action="Create" class="btn btn-success">Create New Grade</a>
+    </div>
+
+    <div class="row">
+        <div class="col-md-2 student-panel">
+            <h5 class="mb-3">Students</h5>
+            @foreach (var studentNumber in studentNumbers)
+            {
+                <div class="student-item" data-student="@studentNumber">
+                    <i class="fas fa-user mr-2 text-primary"></i>@studentNumber
+                </div>
+            }
+        </div>
+
+        <div class="col-md-10">
+            <div class="grade-table-container">
+                <h4 id="studentHeader" class="grade-header">Select a student to view grades</h4>
+                <div class="table-responsive">
+                    <table class="table table-bordered grade-table">
+                        <thead class="thead-light">
+                            <tr>
+                                <th>Student Number</th>
+                                <th>Code</th>
+                                <th>Grade Value</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var grade in Model)
+                            {
+                                <tr class="grade-row" data-student="@grade.StudentNumber" style="display:none;">
+                                    <td>@grade.StudentNumber</td>
+                                    <td>@grade.Code</td>
+                                    <td>@grade.GradeValue</td>
+                                    <td class="action-links">
+                                        <a asp-action="Edit" asp-route-id="@grade.Id" class="text-primary">Edit</a>
+                                        <a asp-action="Details" asp-route-id="@grade.Id" class="text-info">Details</a>
+                                        <a asp-action="Delete" asp-route-id="@grade.Id" class="text-danger">Delete</a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        document.querySelectorAll(".student-item").forEach(item => {
+            item.addEventListener("click", function () {
+                const studentNumber = this.getAttribute("data-student");
+
+                document.querySelectorAll(".grade-row").forEach(row => {
+                    row.style.display = "none";
+                });
+
+                document.querySelectorAll(`.grade-row[data-student='${studentNumber}']`).forEach(row => {
+                    row.style.display = "";
+                });
+
+                document.getElementById("studentHeader").innerText = `Grades for ${studentNumber}`;
+            });
+        });
+    </script>
+}

@@ -1,0 +1,108 @@
+﻿@model StudentInformationSystem.Models.Student
+
+@{
+    ViewBag.Title = "My Grades";
+}
+
+<style>
+    .sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        width: 220px;
+        background-color: #f8f9fa;
+        box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+        padding-top: 60px;
+    }
+
+    .sidebar-content {
+        text-align: center;
+        padding: 0 15px;
+    }
+
+    .sidebar-logo {
+        max-height: 100px;
+        margin-bottom: 20px;
+        margin-top: 10%;
+    }
+
+    .main-content {
+        margin-left: 100px;
+        padding: 20px;
+    }
+</style>
+
+<div class="container-fluid">
+    <div class="row">
+
+        <!-- Sidebar -->
+        <nav class="sidebar">
+            <div class="sidebar-content">
+                <img src="~/images/Düzce_University_logo.svg.png" alt="Logo" class="img-fluid sidebar-logo">
+                <h5 class="mb-4">Menu</h5>
+
+                <ul class="nav flex-column">
+                    <li class="nav-item mb-2">
+                        <a class="btn btn-primary w-100" asp-controller="StudentMain" asp-action="LessonPlan">Lesson Plan</a>
+                    </li>
+                    <li class="nav-item mb-2">
+                        <a class="btn btn-primary w-100" asp-controller="StudentMain" asp-action="AcademicCalendar">Academic Calendar</a>
+                    </li>
+                    <li class="nav-item mb-2">
+                        <a class="btn btn-primary w-100" asp-controller="StudentMain" asp-action="DetailsByIdentityNumber" asp-route-identityNumber="@ViewBag.Student.IdentityNumber">My Details</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <h2 class="text-center" style="font-size:40px" >My Grades</h2>
+
+            <div class="card shadow-sm mt-4">
+                <div class="card-body">
+                    <h4 class="card-title">Student Information</h4>
+                    <dl class="row">
+                        <dt class="col-sm-3">Name:</dt>
+                        <dd class="col-sm-9">@ViewBag.Student.Name</dd>
+                        <dt class="col-sm-3">Identity Number:</dt>
+                        <dd class="col-sm-9">@ViewBag.Student.IdentityNumber</dd>
+                    </dl>
+                </div>
+            </div>
+
+            <div class="card shadow-sm mt-4">
+                <div class="card-body">
+                    <h4 class="card-title">Grades</h4>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Course Code</th>
+                                <th>Course Name</th>
+                                <th>Grade</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var grade in ViewBag.Grades)
+                            {
+                                <tr>
+                                    <td>@grade.Code</td>
+                                    <td>@grade.LessonName</td>
+                                    <td>@grade.GradeValue</td>
+                                </tr>
+                            }
+                            @if (ViewBag.Grades.Count == 0)
+                            {
+                                <tr>
+                                    <td colspan="3">No grades available</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+
+    </div>
+</div>

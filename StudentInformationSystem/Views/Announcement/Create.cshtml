@@ -1,0 +1,152 @@
+﻿@model StudentInformationSystem.Models.Announcement
+
+@{
+    ViewData["Title"] = "Create Announcement";
+}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+
+<style>
+    body {
+        background-color: #f7f7f7;
+    }
+
+    .create-card {
+        max-width: 700px;
+        margin: 50px auto;
+        padding: 30px;
+        background: #fff;
+        border-radius: 15px;
+        box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.1);
+        transition: box-shadow 0.3s;
+    }
+
+        .create-card:hover {
+            box-shadow: 0px 12px 30px rgba(0, 123, 255, 0.3);
+        }
+
+        .create-card h1 {
+            font-weight: bold;
+            margin-bottom: 30px;
+        }
+
+    .form-group label {
+        font-weight: 600;
+    }
+
+    .btn-create {
+        background-color: #28a745;
+        border: none;
+        padding: 10px 30px;
+        border-radius: 30px;
+        font-size: 1.1rem;
+        transition: background-color 0.3s;
+    }
+
+        .btn-create:hover {
+            background-color: #218838;
+        }
+
+    .btn-back {
+        background-color: #6c757d;
+        border: none;
+        padding: 10px 30px;
+        border-radius: 30px;
+        font-size: 1.1rem;
+        position: absolute;
+        top: 100px;
+        left: 100px;
+        transition: background-color 0.3s;
+        z-index: 1000;
+    }
+
+    .btn-back:hover {
+        background-color: #5a6268;
+    }
+
+    .form-buttons {
+        margin-top: 30px;
+        text-align: center;
+    }
+
+    .validation-summary-errors {
+        margin-bottom: 20px;
+    }
+
+    
+    .back-button {
+        position: fixed;
+        top: 100px;
+        left: 100px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        font-size: 16px;
+        border-radius: 30px;
+        box-shadow: 0px 4px 10px rgba(0, 123, 255, 0.4);
+        transition: background-color 0.3s, transform 0.3s;
+        z-index: 9999;
+    }
+
+    .back-button:hover {
+        background-color: #0056b3;
+        transform: translateY(-2px);
+        text-decoration: none;
+    }
+</style>
+
+
+
+<div class="create-card">
+    <h1 class="text-center"><i class="fas fa-plus-circle"></i> Create Announcement</h1>
+
+    <form asp-action="Create">
+        <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+
+        <div class="form-group">
+            <label asp-for="Title" class="control-label"></label>
+            <input asp-for="Title" class="form-control" placeholder="Enter Title..." />
+            <span asp-validation-for="Title" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Content" class="control-label"></label>
+            <textarea asp-for="Content" class="form-control" rows="5" placeholder="Enter Content..."></textarea>
+            <span asp-validation-for="Content" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Date" class="control-label"></label>
+            <input asp-for="Date" class="form-control" type="datetime-local" id="DateField" />
+            <span asp-validation-for="Date" class="text-danger"></span>
+        </div>
+
+        <div class="form-buttons">
+            <input type="submit" value="Create" class="btn btn-success btn-create" />
+            <a asp-action="Index" class="btn btn-secondary btn-back">Back</a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+           
+            var now = new Date();
+            var formatted = now.toISOString().slice(0, 16); 
+            document.getElementById('DateField').value = formatted;
+        });
+
+        
+
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+    </script>
+
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

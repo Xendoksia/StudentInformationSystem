@@ -1,0 +1,177 @@
+﻿@model IEnumerable<StudentInformationSystem.Models.Lesson>
+
+@{
+    ViewData["Title"] = "Lesson Information";
+}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+
+<style>
+    body {
+        background-color: #f7f7f7;
+    }
+
+    .lesson-card {
+        width: 100%;
+        max-width: 320px;
+        height: 400px;
+        border-radius: 15px;
+        border: none;
+        margin: 15px auto;
+        background-color: #ffffff;
+        box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s, box-shadow 0.3s;
+        cursor: pointer;
+        text-align: center;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+        .lesson-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0px 12px 24px rgba(0, 123, 255, 0.3);
+        }
+
+    .lesson-icon {
+        font-size: 50px;
+        color: #007bff;
+        margin-bottom: 10px;
+    }
+
+    .card-title {
+        font-size: 1.4rem;
+        font-weight: bold;
+        margin-bottom: 10px;
+  
+    }
+
+    .card-text {
+        flex-grow: 1;
+        font-size: 1rem;
+        margin-top: 30px;
+        padding:10px;
+    }
+
+    .btn-link {
+        color: #007bff;
+        text-decoration: none;
+        margin: 0 10px;
+        font-weight: 600;
+    }
+
+        .btn-link:hover {
+            text-decoration: underline;
+        }
+
+    footer {
+        margin-top: 50px;
+    }
+
+    .create-btn {
+        margin-top: 40px;
+        border-radius: 30px;
+        padding: 10px 30px;
+    }
+
+    .back-button {
+        position: fixed;
+        top: 100px;
+        left: 100px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        font-size: 16px;
+        border-radius: 30px;
+        box-shadow: 0px 4px 10px rgba(0, 123, 255, 0.4);
+        transition: background-color 0.3s, transform 0.3s;
+        z-index: 9999; 
+    }
+
+        .back-button:hover {
+            background-color: #0056b3;
+            text-decoration: none;
+        }
+</style>
+<button class="back-button" onclick="goBack()">← Back</button>
+
+
+<h1 class="text-center mt-0">Lesson Informations</h1>
+
+<div class="container mt-4">
+    <div class="row justify-content-end mb-4">
+        <div class="col-md-4">
+            <form method="get" action="/Lesson/Index" class="input-group">
+                <input type="text" name="search" placeholder="Search by lesson name" class="form-control">
+                <button type="submit" class="btn btn-primary">Search</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row justify-content-center">
+        @foreach (var lesson in Model)
+        {
+            <div class="col-lg-4 col-md-6 d-flex align-items-stretch">
+                <div class="lesson-card" onclick="toggleDetails('@lesson.Id')">
+                    <div>
+                        <i class="fas fa-book lesson-icon"></i>
+                        <h5 class="card-title">@lesson.Name</h5>
+                        <p class="card-text">
+                            <strong>Code:</strong> @lesson.Code <br />
+                            <strong>Semester:</strong> @lesson.Semester <br />
+                            <strong>Credit:</strong> @lesson.Credit
+                        </p>
+                    </div>
+                    <div id="details-@lesson.Id" style="display: none;">
+                        <a href="/Lesson/Edit/@lesson.Id" class="btn btn-link">Edit</a>
+                        <a href="/Lesson/Delete/@lesson.Id" class="btn btn-link">Delete</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<div class="container text-center">
+    <a href="/Lesson/Create" class="btn btn-primary create-btn">Create New Lesson</a>
+</div>
+
+
+<script>
+    let currentlyOpen = null;
+
+    function toggleDetails(lessonId) {
+        if (currentlyOpen && currentlyOpen !== lessonId) {
+            document.getElementById('details-' + currentlyOpen).style.display = 'none';
+        }
+
+        var detailsDiv = document.getElementById('details-' + lessonId);
+
+        if (detailsDiv.style.display === 'block') {
+            detailsDiv.style.display = 'none';
+            currentlyOpen = null;
+        } else {
+            detailsDiv.style.display = 'block';
+            currentlyOpen = lessonId;
+        }
+    }
+
+    function goBack() {
+    @if (User.IsInRole("teacher"))
+    {
+        <text>window.location.href = '@Url.Action("Index", "TeacherMain")';</text>
+    }
+    else if (User.IsInRole("admin"))
+    {
+        <text>window.location.href = '@Url.Action("Index", "Admin")';</text>
+    }
+    else
+    {
+        <text>window.history.back();</text>
+    }
+    }
+</script>

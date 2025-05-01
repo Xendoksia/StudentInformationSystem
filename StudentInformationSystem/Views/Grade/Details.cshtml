@@ -1,0 +1,31 @@
+﻿@model StudentInformationSystem.Models.Grade
+
+@{
+    ViewData["Title"] = "Grade Details";
+}
+
+<h1 class="text-center">Grade Details</h1>
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h4 class="card-title">Grade Information</h4>
+                    <dl class="row">
+                        <dt class="col-sm-3">Student Number:</dt>
+                        <dd class="col-sm-9">@Html.DisplayFor(model => model.StudentNumber)</dd>
+                        <dt class="col-sm-3">Lesson Code:</dt>
+                        <dd class="col-sm-9">@Html.DisplayFor(model => model.Code)</dd>
+                        <dt class="col-sm-3">Grade Value:</dt>
+                        <dd class="col-sm-9">@Html.DisplayFor(model => model.GradeValue)</dd>
+                    </dl>
+                </div>
+                <div class="card-footer text-right">
+                    <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-primary">Edit</a>
+                    <a asp-action="Index" class="btn btn-secondary ml-2">Back to List</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

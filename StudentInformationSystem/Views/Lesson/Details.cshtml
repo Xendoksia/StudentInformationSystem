@@ -1,0 +1,61 @@
+﻿@model StudentInformationSystem.Models.Lesson
+
+@{
+    ViewData["Title"] = "Lesson Details";
+}
+<style>
+    .back-button {
+        position: fixed;
+        top: 100px;
+        left: 100px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        font-size: 16px;
+        border-radius: 30px;
+        box-shadow: 0px 4px 10px rgba(0, 123, 255, 0.4);
+        transition: background-color 0.3s, transform 0.3s;
+        z-index: 9999;
+    }
+
+        .back-button:hover {
+            background-color: #0056b3;
+            transform: translateY(-2px);
+            text-decoration: none;
+        }
+</style>
+
+<h1 class="text-center">Lesson Details</h1>
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h4 class="card-title">Lesson Information</h4>
+                    <dl class="row">
+                        <dt class="col-sm-3">Code:</dt>
+                        <dd class="col-sm-9">@Html.DisplayFor(model => model.Code)</dd>
+                        <dt class="col-sm-3">Name:</dt>
+                        <dd class="col-sm-9">@Html.DisplayFor(model => model.Name)</dd>
+                        <dt class="col-sm-3">Semester:</dt>
+                        <dd class="col-sm-9">@Html.DisplayFor(model => model.Semester)</dd>
+                        <dt class="col-sm-3">Credit:</dt>
+                        <dd class="col-sm-9">@Html.DisplayFor(model => model.Credit)</dd>
+                    </dl>
+                </div>
+                <div class="card-footer text-right">
+                    <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-primary">Edit</a>
+                    <a asp-action="Index" class="btn btn-secondary ml-2">Back to List</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+
+    function goBack() {
+        window.history.back();
+    }
+</script>

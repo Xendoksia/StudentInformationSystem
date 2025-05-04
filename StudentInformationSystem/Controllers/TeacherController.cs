@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -152,5 +153,8 @@ namespace StudentInformationSystem.Controllers
         {
             return _context.Teachers.Any(e => e.Id == id);
         }
+       
+   
+        
     }
 }

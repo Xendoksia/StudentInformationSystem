@@ -1,0 +1,91 @@
+﻿@model IEnumerable<StudentInformationSystem.Models.Message>
+
+@{
+    ViewData["Title"] = "Inbox";
+}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+
+<style>
+    body {
+        background-color: #f8f9fa;
+    }
+
+    .inbox-container {
+        background-color: white;
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+        margin-top: 40px;
+    }
+
+    .inbox-title {
+        font-size: 28px;
+        font-weight: bold;
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    .table th {
+        background-color: #007bff;
+        color: white;
+        text-align: center;
+    }
+
+    .table td {
+        vertical-align: middle;
+        text-align: center;
+    }
+
+    .no-messages {
+        text-align: center;
+        color: #888;
+        font-size: 1.1rem;
+        padding: 20px;
+    }
+
+    .message-content {
+        text-align: left;
+    }
+</style>
+
+<div class="container">
+    <div class="inbox-container">
+        <div class="inbox-title">
+            <i class="fas fa-inbox"></i> Inbox
+        </div>
+
+        @if (!Model.Any())
+        {
+            <div class="no-messages">
+                You have no messages.
+            </div>
+        }
+        else
+        {
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th>Sender</th>
+                            <th>Subject</th>
+                            <th>Message</th>
+                            <th>Sent At</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var message in Model)
+                        {
+                            <tr>
+                                <td>@message.Sender</td>
+                                <td>@message.Subject</td>
+                                <td class="message-content">@message.Content</td>
+                                <td>@message.SentAt.ToString("dd MMM yyyy HH:mm")</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+    </div>
+</div>

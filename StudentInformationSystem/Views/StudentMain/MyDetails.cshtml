@@ -59,8 +59,11 @@
                     <li class="nav-item mb-2">
                         <a class="btn btn-primary w-100" asp-controller="StudentMain" asp-action="AcademicCalendar">Academic Calendar</a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item mb-2">
                         <a class="btn btn-primary w-100" asp-controller="StudentMain" asp-action="MyGrades" asp-route-identityNumber="@Model.IdentityNumber">My Grades</a>
+                    </li>
+                    <li class="nav-item mb-2">
+                        <a class="btn btn-primary w-100 style="margin-top:10px" asp-controller="StudentMain" asp-action="Inbox">Inbox</a>
                     </li>
                 </ul>
             </div>

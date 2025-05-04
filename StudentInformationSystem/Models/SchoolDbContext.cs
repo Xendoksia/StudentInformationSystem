@@ -14,7 +14,7 @@ namespace StudentInformationSystem.Models
         public DbSet<Lesson> Lessons { get; set; }
         public DbSet<Grade> Grades { get; set; }
         public DbSet<Announcement> Announcements { get; set; }
-
+        public DbSet<Message> Messages { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

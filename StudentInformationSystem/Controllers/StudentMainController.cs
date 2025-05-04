@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -147,8 +148,24 @@ namespace StudentInformationSystem.Controllers
             }
             return View(student);
         }
+        [Authorize(Roles = "student")]
+        public async Task<IActionResult> Inbox()
+        {
+            var identityNumber = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+
+            if (string.IsNullOrEmpty(identityNumber))
+                return Unauthorized();
+
+            var messages = await _context.Messages
+                .Where(m => m.ReceiverIdentityNumber == identityNumber)
+                .OrderByDescending(m => m.SentAt)
+                .ToListAsync();
+
+            return View(messages);
+        }
 
 
-        
+
+
     }
 }

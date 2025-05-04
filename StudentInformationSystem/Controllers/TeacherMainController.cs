@@ -10,5 +10,7 @@ namespace StudentInformationSystem.Controllers
         {
             return View();
         }
+
     }
+
 }

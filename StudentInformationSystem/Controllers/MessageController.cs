@@ -31,7 +31,7 @@ public class MessageController : Controller
         {
             var senderIdentity = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            // Güvenlik kontrolü
+          
             if (string.IsNullOrEmpty(senderIdentity))
             {
                 ModelState.AddModelError("", "Could not determine sender identity.");
@@ -46,6 +46,6 @@ public class MessageController : Controller
             return RedirectToAction("Index", "TeacherMain");
         }
 
-        return View(message); // ModelState hatalıysa formu tekrar göster
+        return View(message); 
     }
 }

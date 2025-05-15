@@ -44,7 +44,7 @@ namespace StudentInformationSystem.Controllers
             var announcements = await _context.Announcements.ToListAsync();
             ViewBag.Announcements = announcements;
 
-            return View("MyDetails", student); // Details view'ını kullanarak öğrenci bilgilerini gösteriyoruz
+            return View("MyDetails", student); 
         }
 
         public IActionResult LessonPlan()
@@ -56,8 +56,7 @@ namespace StudentInformationSystem.Controllers
             return View();
         }
 
-        // Öğrenci kimlik numarasına göre detaylarını ve notlarını gösteren action
-        //[Authorize]
+       
         public async Task<IActionResult> MyGrades(string identityNumber)
         {
             if (string.IsNullOrEmpty(identityNumber))

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc;
 
 namespace StudentInformationSystem.Models
 {
@@ -32,6 +33,7 @@ namespace StudentInformationSystem.Models
 
         [Required(ErrorMessage = "Please enter the student's email")]
         [EmailAddress(ErrorMessage = "Invalid email address")]
+        [Remote("ValidateEmail", "Student", HttpMethod = "Post", ErrorMessage = "This email already exists.")]
         public string Email { get; set; }
 
         [StringLength(100)]
@@ -39,8 +41,9 @@ namespace StudentInformationSystem.Models
 
         [Required(ErrorMessage = "Please enter the student's student number")]
         [StringLength(9)]
+        [Remote("ValidateStudentNumber", "Student", HttpMethod = "Post", ErrorMessage = "This student number already exists.")]
         public string StudentNumber { get; set; }
 
-        // Add other properties as needed
+      
     }
 }

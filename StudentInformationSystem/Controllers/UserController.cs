@@ -45,40 +45,61 @@ namespace StudentInformationSystem.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Username,Password,Role,IdentityNumber")] User user)
         {
-            if (ModelState.IsValid)
+            // 1️⃣ Server-side uniqueness check (IdentityNumber zaten varsa hata ekle)
+            if (_context.Users.Any(u => u.IdentityNumber == user.IdentityNumber))
             {
-                // Eğer girilen IdentityNumber student tablosunda varsa oradan isim al, yoksa default üret
-                var student = await _context.Students.FirstOrDefaultAsync(s => s.IdentityNumber == user.IdentityNumber);
-
-                if (student != null)
-                {
-                    user.Username = $"{student.Name.ToLower()}.{student.Surname.ToLower()}";
-                }
-                else if (string.IsNullOrWhiteSpace(user.Username))
-                {
-                    string last4 = user.IdentityNumber.Length >= 4 ? user.IdentityNumber[^4..] : "user";
-                    user.Username = $"user{last4}";
-                }
-
-                // Şifreyi de frontend'de göründüğü gibi random oluştur
-                if (string.IsNullOrWhiteSpace(user.Password))
-                {
-                    user.Password = GenerateRandomPassword(8);
-                }
-
-                _context.Add(user);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                ModelState.AddModelError(nameof(user.IdentityNumber), "This identity already exists.");
             }
-            return View(user);
+
+            // 2️⃣ ModelState'i kontrol et (hem Required hem Remote Validation hataları burada toplanır)
+            if (!ModelState.IsValid)
+            {
+                return View(user);
+            }
+
+            // 3️⃣ Eğer bu identity öğrenci tablosunda varsa kullanıcı adını öğrenciden al, yoksa default üret
+            var student = await _context.Students
+                .FirstOrDefaultAsync(s => s.IdentityNumber == user.IdentityNumber);
+
+            if (student != null)
+            {
+                user.Username = $"{student.Name.ToLower()}.{student.Surname.ToLower()}";
+            }
+            else if (string.IsNullOrWhiteSpace(user.Username))
+            {
+                var last4 = user.IdentityNumber.Length >= 4
+                    ? user.IdentityNumber[^4..]
+                    : "user";
+                user.Username = $"user{last4}";
+            }
+
+            // 4️⃣ Şifre boşsa, frontend'de göründüğü gibi rastgele oluştur
+            if (string.IsNullOrWhiteSpace(user.Password))
+            {
+                user.Password = GenerateRandomPassword(8);
+            }
+
+            // 5️⃣ Veritabanına ekle ve kaydet
+            _context.Add(user);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
+        }
+        [AcceptVerbs("GET", "POST")]
+        public IActionResult ValidateIdentityNumber(string identityNumber)
+        {
+            bool exists = _context.Users.Any(u => u.IdentityNumber == identityNumber);
+            return exists ? Json("This identity already exists.") : Json(true);
         }
 
         private string GenerateRandomPassword(int length)
         {
             const string chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
             var random = new Random();
-            return new string(Enumerable.Repeat(chars, length)
-                .Select(s => s[random.Next(s.Length)]).ToArray());
+            return new string(Enumerable
+                .Repeat(chars, length)
+                .Select(s => s[random.Next(s.Length)])
+                .ToArray());
         }
 
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace StudentInformationSystem.Models
@@ -19,13 +20,15 @@ namespace StudentInformationSystem.Models
         [StringLength(50)]
         public string Surname { get; set; }
 
-        [Required(ErrorMessage = "Please enter the student's email")]
-        [EmailAddress(ErrorMessage = "Invalid email address")]
+        [Required(ErrorMessage = "Please enter email")]
+        [EmailAddress(ErrorMessage = "Invalid email")]
+        [Remote("ValidateEmail", "Teacher", HttpMethod = "Post", ErrorMessage = "This email already exists.")]
         public string Email { get; set; }
+
 
         [StringLength(100)]
         public string Office { get; set; }
 
-        // Add other properties as needed
+     
     }
 }

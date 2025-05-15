@@ -57,15 +57,30 @@ namespace StudentInformationSystem.Controllers
         // POST: Teacher/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [AllowAnonymous]
         public async Task<IActionResult> Create([Bind("Id,IdentityNumber,Name,Surname,Email,Office")] Teacher teacher)
         {
-            if (ModelState.IsValid)
+            if (_context.Teachers.Any(t => t.Email == teacher.Email))
             {
-                _context.Add(teacher);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                ModelState.AddModelError(nameof(teacher.Email), "This email already exists.");
             }
-            return View(teacher);
+
+            if (!ModelState.IsValid)
+            {
+                return View(teacher);
+            }
+
+            _context.Add(teacher);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+
+        [AcceptVerbs("GET", "POST")]
+        [AllowAnonymous] 
+        public IActionResult ValidateEmail(string email)
+        {
+            bool exists = _context.Teachers.Any(t => t.Email == email);
+            return exists ? Json("This email already exists.") : Json(true);
         }
 
         // GET: Teacher/Edit/5

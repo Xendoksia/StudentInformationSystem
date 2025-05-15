@@ -4,14 +4,14 @@ namespace StudentInformationSystem.Models
 {
     public class LoginViewModel
     {
-        [Required]
+        [Required(ErrorMessage = "Username is required.")]
         public string Username { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Identity number is required.")]
         [DataType(DataType.Password)]
         public string Password { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Password is required.")]
         public string IdentityNumber { get; set; }
     }
 }

@@ -75,7 +75,7 @@ namespace StudentInformationSystem.Controllers
                     return NotFound();
                 }
 
-                // ❗ Aynı öğrencinin aynı dersten daha önce notu varsa hata mesajı ver
+               
                 bool gradeExists = await _context.Grades.AnyAsync(g => g.StudentNumber == grade.StudentNumber && g.Code == grade.Code);
                 if (gradeExists)
                 {
